@@ -1,1 +1,3 @@
-xterm &
+termite &
+
+exec ./notebarexec

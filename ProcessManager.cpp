@@ -74,13 +74,26 @@ void ProcessManager::draw() {
     Window root = XRootWindow(this->display, screen);
     XWindowAttributes rootWindowAttributes;
     Window barWindow = *new Window;
-    // XGetWindowAttributes(this->display,root, &rootWindowAttributes);
-    barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,BlackPixel(this->display, screen)),WhitePixel(this->display,screen);
+    XGetWindowAttributes(this->display,root, &rootWindowAttributes);
+    XSetWindowAttributes swa;
+    Visual visual = *DefaultVisual(this->display, screen);
+    visual.red_mask = 597;
+    visual.green_mask = 528;
+    visual.blue_mask = 52;
+    swa.override_redirect = True;
+    // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
+    // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
+    barWindow = XCreateWindow( this->display,root,200, 200, 350, 200, 0, DefaultDepth(this->display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
     // Move window again to force it to ignore window managers
     XSelectInput(this->display,barWindow, ExposureMask | KeyPressMask);
+    // Change attributes and replace override_redirect so window managers don't modify bar's position
+    // swa.override_redirect = True;
+    // XChangeWindowAttributes(this->display,barWindow,0,&swa);
+    XResizeWindow(this->display,barWindow,rootWindowAttributes.width,50);
+    XMoveWindow(this->display, barWindow, 0, rootWindowAttributes.height -50);
     XMapWindow(this->display, barWindow);
-    XMoveWindow(this->display, barWindow, 10, rootWindowAttributes.height-10);
-    for(;;) {
+
+    for (;;) {
         XNextEvent(this->display, &event);
     }
 }

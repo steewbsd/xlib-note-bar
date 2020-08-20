@@ -10,4 +10,4 @@ This comes as a way for me to study the whole C++ language better and get the ha
 
 Please expect a lot of bugs and non working things.
 
-Any advice or issue tickets will be very greatly appreciated.
+Any advice or issue tickets will be very greatly appreciated.p
