@@ -25,13 +25,13 @@ public:
 
 private:
     std::vector<Bar> bars;
-    [[noreturn]] static void listenToXEvents(ProcessManager* pm);
     Display *display;
     pthread_t processThreadPool[1]{};
 
 
     bool checkPositionAlreadyExists(const std::string *positionCheck);
 
+    void listenToXEvents(const XEvent *event);
 };
 
 #endif //NOTEBAR_PROCESS_MANAGER_H

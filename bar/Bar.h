@@ -3,6 +3,7 @@
 //
 
 #include "Note.h"
+#include <X11/Xlib.h>
 #include "Size.h"
 #include <vector>
 #include "Margin.h"
@@ -14,6 +15,7 @@ class Bar {
 private:
 
     std::vector<Note>noteCollection;
+    Window barWindow;
     std::string position;
     Margin *margin;
     // This margin serves as the current margin, because if the bar is in one position one of the margins should be ditched. (Example: Bar in the left, right border should not be used)
@@ -22,9 +24,10 @@ private:
 
 public:
     const std::string &getPosition() const;
+    Window getAssociatedWindow();
     void add(const Note *new_note);
     std::vector<Note> notes();
-    Bar(const std::string *newPosition, Margin *optionalMargin);
+    Bar(const std::string& newPosition, Margin *optionalMargin,Display* display);
     ~Bar();
 
     Size distributeAllNotes(const float *MAX_SIZE);

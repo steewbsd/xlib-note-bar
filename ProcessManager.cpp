@@ -16,14 +16,12 @@ ProcessManager::ProcessManager(Display *display) {
   this->display = display;
 }
 
-[[noreturn]] void ProcessManager::listenToXEvents(ProcessManager *pm) {
-  // TODO
-  XEvent *event = nullptr;
-  for (;;) {
-    std::cout << "Listening to X Events..." << std::endl;
-    XNextEvent(pm->display, event);
+void ProcessManager::listenToXEvents(const XEvent* event) {
     // ProcessManager::receiveXNotification(event);
-  }
+    switch (event->type) {
+        default:
+            break;
+    }
 }
 
 void ProcessManager::distributeBars(const std::vector<Bar *> *processCurrentBars ) {
@@ -48,7 +46,7 @@ bool ProcessManager::addBar(const std::string *barPosition) {
     return false;
   }
   Margin margin = Margin(nullptr, nullptr, nullptr, nullptr);
-  Bar newBar = Bar(barPosition, &margin);
+  Bar newBar = Bar(*barPosition, &margin, this->display);
   this->bars.emplace_back(newBar);
   this->barMap.emplace(*barPosition,newBar);
   return true;
@@ -64,13 +62,14 @@ void ProcessManager::run() {
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)ProcessManager::listenToXEvents, this);
     */
-    ProcessManager::listenToXEvents(this);
 }
 
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
     XEvent event;
-    int screen = XDefaultScreen(this->display);
+    // TEMPORARY
+    Bar bottomBar = Bar("bottom", new Margin(),this->display);
+    /* int screen = XDefaultScreen(this->display);
     Window root = XRootWindow(this->display, screen);
     XWindowAttributes rootWindowAttributes;
     Window barWindow = *new Window;
@@ -90,8 +89,8 @@ void ProcessManager::draw() {
     // swa.override_redirect = True;
     // XChangeWindowAttributes(this->display,barWindow,0,&swa);
     XResizeWindow(this->display,barWindow,rootWindowAttributes.width,50);
-    XMoveWindow(this->display, barWindow, 0, rootWindowAttributes.height -50);
-    XMapWindow(this->display, barWindow);
+    XMoveWindow(this->display, barWindow, 0, rootWindowAttributes.height -50); */
+    XMapWindow(this->display, bottomBar.getAssociatedWindow());
 
     for (;;) {
         XNextEvent(this->display, &event);
