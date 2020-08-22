@@ -13,5 +13,5 @@ int main() {
    std::cout << "X display opened without errors.\n";
    // Temporary debug with default bottom bar
     ProcessManager pm = ProcessManager(display);
-    pm.draw();
+    pm.run();
 }

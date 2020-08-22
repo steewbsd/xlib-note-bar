@@ -14,7 +14,7 @@ private:
     float marginRight;
 public:
     explicit Margin();
-    explicit Margin(const float* margins...);
+    explicit Margin(float* margins...);
     float getMarginTop() const {
         return marginTop;
     }

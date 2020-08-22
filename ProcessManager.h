@@ -14,24 +14,22 @@ class ProcessManager {
 
 public:
     explicit ProcessManager(Display *display);
-    bool addBar(const std::string *barPosition);
     ~ProcessManager();
     void distributeBars(const std::vector<Bar*> *processCurrentBars);
     void draw();
     static void receiveXNotification(const XEvent *event);
     std::map<std::string, Bar> barMap;
+    bool addBar(const std::string &barPosition, Margin *margin);
 
-    void run();
+    [[noreturn]] void run();
 
 private:
     std::vector<Bar> bars;
     Display *display;
     pthread_t processThreadPool[1]{};
-
-
     bool checkPositionAlreadyExists(const std::string *positionCheck);
 
-    void listenToXEvents(const XEvent *event);
+    void listenToXEvents(XEvent *event);
 };
 
 #endif //NOTEBAR_PROCESS_MANAGER_H

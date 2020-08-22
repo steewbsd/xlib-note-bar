@@ -74,6 +74,7 @@ const std::string &Bar::getPosition() const {
 }
 
 Window Bar::getAssociatedWindow() {
+
     return this->barWindow;
 }
 

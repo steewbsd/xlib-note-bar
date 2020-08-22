@@ -16,12 +16,12 @@ ProcessManager::ProcessManager(Display *display) {
   this->display = display;
 }
 
-void ProcessManager::listenToXEvents(const XEvent* event) {
+void ProcessManager::listenToXEvents(XEvent *event) {
     // ProcessManager::receiveXNotification(event);
-    switch (event->type) {
-        default:
-            break;
-    }
+        switch (event->type) {
+            default:
+                break;
+        }
 }
 
 void ProcessManager::distributeBars(const std::vector<Bar *> *processCurrentBars ) {
@@ -41,14 +41,15 @@ bool ProcessManager::checkPositionAlreadyExists(
                      });
 }
 
-bool ProcessManager::addBar(const std::string *barPosition) {
-  if (ProcessManager::checkPositionAlreadyExists(barPosition)) {
+bool ProcessManager::addBar(const std::string &barPosition, Margin* margin) {
+  if (ProcessManager::checkPositionAlreadyExists(&barPosition)) {
     return false;
   }
-  Margin margin = Margin(nullptr, nullptr, nullptr, nullptr);
-  Bar newBar = Bar(*barPosition, &margin, this->display);
+  Bar newBar = Bar(barPosition, margin, this->display);
   this->bars.emplace_back(newBar);
-  this->barMap.emplace(*barPosition,newBar);
+  this->barMap.emplace(barPosition,newBar);
+  // Update bar map
+  this->draw();
   return true;
 }
 
@@ -57,42 +58,25 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 }
 
 // Run program forever (until stopped by user or signal)
-void ProcessManager::run() {
+[[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
+    this->addBar("bottom", new Margin(nullptr, nullptr, nullptr, nullptr));
     /* pthread_create(&this->processThreadPool[0], nullptr,
-                 (THREADFUNCPTR)ProcessManager::listenToXEvents, this);
-    */
+                 (THREADFUNCPTR)listenToXEvents, this); */
+
+    // Main event loop
+    XEvent *event = nullptr;
+    for(;;) {
+        XNextEvent(this->display, event);
+        //listenToXEvents(event);
+    }
 }
 
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
-    XEvent event;
-    // TEMPORARY
-    Bar bottomBar = Bar("bottom", new Margin(),this->display);
-    /* int screen = XDefaultScreen(this->display);
-    Window root = XRootWindow(this->display, screen);
-    XWindowAttributes rootWindowAttributes;
-    Window barWindow = *new Window;
-    XGetWindowAttributes(this->display,root, &rootWindowAttributes);
-    XSetWindowAttributes swa;
-    Visual visual = *DefaultVisual(this->display, screen);
-    visual.red_mask = 597;
-    visual.green_mask = 528;
-    visual.blue_mask = 52;
-    swa.override_redirect = True;
-    // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
-    // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
-    barWindow = XCreateWindow( this->display,root,200, 200, 350, 200, 0, DefaultDepth(this->display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
-    // Move window again to force it to ignore window managers
-    XSelectInput(this->display,barWindow, ExposureMask | KeyPressMask);
-    // Change attributes and replace override_redirect so window managers don't modify bar's position
-    // swa.override_redirect = True;
-    // XChangeWindowAttributes(this->display,barWindow,0,&swa);
-    XResizeWindow(this->display,barWindow,rootWindowAttributes.width,50);
-    XMoveWindow(this->display, barWindow, 0, rootWindowAttributes.height -50); */
-    XMapWindow(this->display, bottomBar.getAssociatedWindow());
-
-    for (;;) {
-        XNextEvent(this->display, &event);
-    }
+    Display * displayPtr = this->display;
+    auto place = [&](std::pair<std::string, Bar> map){
+        XMapWindow(displayPtr, map.second.getAssociatedWindow());
+    };
+    std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }

@@ -6,7 +6,9 @@
 #include <iostream>
 
 // Every margin should be passed to the constructor, if no margin is needed null should be passed
-Margin::Margin(const float *margins, ...) {
+// FIXME
+// Top, left, bottom, right (anticlockwise)
+Margin::Margin(float* margins...) {
   if (&margins[0] != nullptr) {
     marginTop = margins[0];
   }
