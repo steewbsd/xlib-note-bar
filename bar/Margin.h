@@ -8,17 +8,19 @@
 
 class Margin {
 private:
+
+
     float marginTop;
     float marginLeft;
     float marginBottom;
     float marginRight;
 public:
-    explicit Margin();
-    explicit Margin(float* margins...);
     float getMarginTop() const {
         return marginTop;
     }
 
+    Margin();
+    Margin(float top, float left, float bottom, float right);
     void setMarginTop(float marginTop) {
         Margin::marginTop = marginTop;
     }

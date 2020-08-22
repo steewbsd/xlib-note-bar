@@ -50,7 +50,10 @@ Bar::Bar(const std::string& newPosition, Margin* optionalMargin, Display* displa
     // swa.override_redirect = True;
     // XChangeWindowAttributes(this->display,barWindow,0,&swa);
     XResizeWindow(display,barWindow,rootWindowAttributes.width,50);
-    XMoveWindow(display, barWindow, 0, rootWindowAttributes.height -50);
+   // Get new bar window attributes
+   XWindowAttributes barWindowAttributes;
+    XGetWindowAttributes(display,barWindow, &barWindowAttributes);
+    XMoveWindow(display, barWindow, 0, rootWindowAttributes.height-this->currentPositionMargin.getMarginBottom()-barWindowAttributes.height);
     // XMapWindow(display, barWindow);
 }
 
