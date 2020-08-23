@@ -15,22 +15,7 @@ std::vector<Note> Bar::notes() {
     return this->noteCollection;
 }
 
-Bar::Bar(const std::string& newPosition, Margin* optionalMargin, Display* display) {
-
-    this->position = newPosition;
-    this->margin = optionalMargin;
-    this->currentPositionMargin = *this->margin;
-    if (this->position == "top") {
-        this->currentPositionMargin.setMarginBottom(0);
-    } else if (this->position == "left") {
-        this->currentPositionMargin.setMarginRight(0);
-    } else if (this->position == "bottom") {
-        this->currentPositionMargin.setMarginLeft(0);
-    } else if (this->position == "right") {
-        this->currentPositionMargin.setMarginTop(0);
-    } else {
-        return;
-    }
+Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
 
     XEvent event;
     int screen = XDefaultScreen(display);
@@ -41,19 +26,41 @@ Bar::Bar(const std::string& newPosition, Margin* optionalMargin, Display* displa
     XSetWindowAttributes swa;
     Visual visual = *DefaultVisual(display, screen);
     swa.override_redirect = True;
+    swa.background_pixel = 0x00796b;
+
+    this->position = newPosition;
+    if (this->position == "top" || this->position == "left") {
+        // Position relative to top should be x: 0 and y: 0 (axis starts top left)
+        this->respectivePosition = {0,0};
+        this->directionMultiplier = {1,1};
+    } else if (this->position == "bottom") {
+        // Position relative to bottom should start at x: 0 and y: root.heigth
+        this->respectivePosition = {0, rootWindowAttributes.height};
+        this->directionMultiplier = {1,-1};
+    } else if (this->position == "right") {
+        this->respectivePosition = {rootWindowAttributes.width, 0};
+        this->directionMultiplier = {-1,1};
+    } else {
+        return;
+    }
+
+
     // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
     // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
-    barWindow = XCreateWindow( display,root,200, 200, 350, 200, 0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
+    barWindow = XCreateWindow( display,root,0,0,
+                               this->respectivePosition.first + (this->directionMultiplier.first * size.first),
+                               this->respectivePosition.second + (this->directionMultiplier.second*size.second),
+                               0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
     // Move window again to force it to ignore window managers
     XSelectInput(display,barWindow, ExposureMask | KeyPressMask);
     // Change attributes and replace override_redirect so window managers don't modify bar's position
     // swa.override_redirect = True;
     // XChangeWindowAttributes(this->display,barWindow,0,&swa);
-    XResizeWindow(display,barWindow,rootWindowAttributes.width,50);
+    /////////XResizeWindow(display,barWindow,rootWindowAttributes.width,50);
    // Get new bar window attributes
-   XWindowAttributes barWindowAttributes;
+    XWindowAttributes barWindowAttributes;
     XGetWindowAttributes(display,barWindow, &barWindowAttributes);
-    XMoveWindow(display, barWindow, 0, rootWindowAttributes.height-this->currentPositionMargin.getMarginBottom()-barWindowAttributes.height);
+    /////////XMoveWindow(display, barWindow, 0, rootWindowAttributes.height-this->currentPositionMargin.getMarginBottom()-barWindowAttributes.height);
     // XMapWindow(display, barWindow);
 }
 
@@ -79,6 +86,14 @@ const std::string &Bar::getPosition() const {
 Window Bar::getAssociatedWindow() {
 
     return this->barWindow;
+}
+
+const std::pair<float, float> &Bar::getSize() const {
+    return size;
+}
+
+void Bar::setSize(const std::pair<float, float> &size) {
+    Bar::size = size;
 }
 
 

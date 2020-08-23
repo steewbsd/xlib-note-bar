@@ -41,11 +41,11 @@ bool ProcessManager::checkPositionAlreadyExists(
                      });
 }
 
-bool ProcessManager::addBar(const std::string &barPosition, Margin* margin) {
+bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,float> size) {
   if (ProcessManager::checkPositionAlreadyExists(&barPosition)) {
     return false;
   }
-  Bar newBar = Bar(barPosition, margin, this->display);
+  Bar newBar = Bar(barPosition, size, this->display);
   this->bars.emplace_back(newBar);
   this->barMap.emplace(barPosition,newBar);
   // Update bar map
@@ -60,7 +60,7 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("bottom", new Margin(0, 0, 200, 0));
+    this->addBar("bottom", {1000,20});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 

@@ -19,7 +19,6 @@ public:
     void draw();
     static void receiveXNotification(const XEvent *event);
     std::map<std::string, Bar> barMap;
-    bool addBar(const std::string &barPosition, Margin *margin);
 
     [[noreturn]] void run();
 
@@ -30,6 +29,8 @@ private:
     bool checkPositionAlreadyExists(const std::string *positionCheck);
 
     void listenToXEvents(XEvent *event);
+
+    bool addBar(const std::string &barPosition, std::pair<float, float> size);
 };
 
 #endif //NOTEBAR_PROCESS_MANAGER_H
