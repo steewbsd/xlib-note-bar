@@ -15,36 +15,9 @@ std::vector<Note> Bar::notes() {
     return this->noteCollection;
 }
 
-void Bar::calculateProperties(const std::string& position, const std::pair<float, float> &relativeSize, std::pair<float, float> *size) {
-
-}
-
-Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
-
-    XEvent event;
-    int screen = XDefaultScreen(display);
-    Window root = XRootWindow(display, screen);
-    XWindowAttributes rootWindowAttributes;
-    barWindow = *new Window;
-    XGetWindowAttributes(display,root, &rootWindowAttributes);
-    XSetWindowAttributes swa;
-    std::pair<float,float> pos;
+std::pair<int,int> Bar::calculateProperties(std::pair<float, float> size) {
     float margin;
-    Visual visual = *DefaultVisual(display, screen);
-    swa.override_redirect = True;
-    swa.background_pixel = 0x00796b;
-
-    // TODO I should make it so the start of the X root coordinates corresponds to usual coords (bottom left)
-    // TODO Using top left is a bit confusing.
-
-    // Locate the bar in the center of its respective position. All the examples are considering bar's default position
-    // on top.
-    // 1.   Substract the total size of the position from the bar size. space = rootWindowAttributes.width - barWindowAttributes.width
-    // 2.   Margin from the border to the bar should be exactly half of that remaining space. margin = space / 2
-    // 3.   Place the bar exactly ${margin} pixels from the border.
-    // 4.   In the case of this example bar, it should be: y= 0 (top left pixel) x=margin
-
-    this->position = newPosition;
+    std::pair<int,int> pos;
     if (this->position == "top") {
         // Calculate margin (see above)
         this->relativeSize = size;
@@ -63,9 +36,40 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
         margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
         pos = {0,margin};
     } else {
-        return;
+        // IF position is unknown, return dedault bottom bar
+        this->relativeSize = size;
+        margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
+        pos = {margin, rootWindowAttributes.height-this->relativeSize.second};
     }
+    return pos;
+}
 
+Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
+
+    XEvent event;
+    int screen = XDefaultScreen(display);
+    Window root = XRootWindow(display, screen);
+    barWindow = *new Window;
+    XGetWindowAttributes(display,root, &this->rootWindowAttributes);
+    XSetWindowAttributes swa;
+    std::pair<float,float> pos;
+    float margin;
+    Visual visual = *DefaultVisual(display, screen);
+    swa.override_redirect = True;
+    swa.background_pixel = 0x00796b;
+
+    // TODO I should make it so the start of the X root coordinates corresponds to usual coords (bottom left)
+    // TODO Using top left is a bit confusing.
+
+    // Locate the bar in the center of its respective position. All the examples are considering bar's default position
+    // on top.
+    // 1.   Substract the total size of the position from the bar size. space = rootWindowAttributes.width - barWindowAttributes.width
+    // 2.   Margin from the border to the bar should be exactly half of that remaining space. margin = space / 2
+    // 3.   Place the bar exactly ${margin} pixels from the border.
+    // 4.   In the case of this example bar, it should be: y= 0 (top left pixel) x=margin
+
+    this->position = newPosition;
+    pos = this->calculateProperties(size);
 
     // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
     // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
