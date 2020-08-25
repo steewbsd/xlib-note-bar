@@ -18,9 +18,24 @@ ProcessManager::ProcessManager(Display *display) {
 
 void ProcessManager::listenToXEvents(XEvent *event) {
     // ProcessManager::receiveXNotification(event);
+    std::cout << "Received XEvent " << event << std::endl;
         switch (event->type) {
-            default:
+            case KeyPress:
+                std::cout << "Received KeyPress event with keycode:" << event->xkey.keycode << std::endl;
+               if (event->xkey.keycode == 80) {
+                    std::cout << "numKey 8 pressed" << std::endl;
+                }
+               break;
+            case ButtonPress:
+                std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
                 break;
+            case EnterNotify:
+                std::cout << "Entered window boundaries" << std::endl;
+                this->barMap["bottom"]->resize({500,50});
+                this->draw();
+                break;
+            default:
+                return;
         }
 }
 
@@ -47,7 +62,7 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
   }
   Bar newBar = Bar(barPosition, size, this->display);
   this->bars.emplace_back(newBar);
-  this->barMap.emplace(barPosition,newBar);
+  this->barMap.emplace(barPosition,&newBar);
   // Update bar map
   this->draw();
   return true;
@@ -60,25 +75,23 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("left", {1000,50});
-    this->addBar("right", {1000,50});
     this->addBar("bottom", {500,50});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 
     // Main event loop
-    XEvent event;
     for(;;) {
+        XEvent event;
         XNextEvent(this->display, &event);
-        //listenToXEvents(event);
+        listenToXEvents(&event);
     }
 }
 
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
     Display * displayPtr = this->display;
-    auto place = [&](std::pair<std::string, Bar> map){
-        XMapWindow(displayPtr, map.second.getAssociatedWindow());
+    auto place = [&](std::pair<std::string, Bar*> map){
+        XMapWindow(displayPtr, map.second->getAssociatedWindow());
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }

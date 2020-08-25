@@ -46,6 +46,7 @@ std::pair<int,int> Bar::calculateProperties(std::pair<float, float> size) {
 
 Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
 
+    this->display = display;
     XEvent event;
     int screen = XDefaultScreen(display);
     Window root = XRootWindow(display, screen);
@@ -78,7 +79,7 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
                                this->relativeSize.second,
                                0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
     // Move window again to force it to ignore window managers
-    XSelectInput(display,barWindow, ExposureMask | KeyPressMask);
+    XSelectInput(display,barWindow, ExposureMask | KeyPressMask | FocusChangeMask | EnterWindowMask | ButtonPressMask);
     // Change attributes and replace override_redirect so window managers don't modify bar's position
     // swa.override_redirect = True;
     // XChangeWindowAttributes(this->display,barWindow,0,&swa);
@@ -109,7 +110,7 @@ const std::string &Bar::getPosition() const {
     return position;
 }
 
-Window Bar::getAssociatedWindow() {
+Window Bar::getAssociatedWindow() const {
 
     return this->barWindow;
 }
@@ -120,6 +121,11 @@ const std::pair<float, float> &Bar::getSize() const {
 
 void Bar::setSize(const std::pair<float, float> &size) {
     Bar::size = size;
+}
+
+void Bar::resize(std::pair<float, float> newSize) {
+    std::pair<int,int> pos = this->calculateProperties(newSize);
+    XResizeWindow(this->display,this->getAssociatedWindow(), pos.first,pos.second);
 }
 
 

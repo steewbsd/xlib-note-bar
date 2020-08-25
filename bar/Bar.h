@@ -16,6 +16,7 @@ private:
 
     std::vector<Note>noteCollection;
     Window barWindow;
+    Display* display;
     std::string position;
     XWindowAttributes rootWindowAttributes;
     // Distance from the bar to the sides of the screen
@@ -33,12 +34,15 @@ public:
     Bar(const std::string &newPosition, std::pair<float, float> size, Display *display);
 
     const std::string &getPosition() const;
-    Window getAssociatedWindow();
+    Window getAssociatedWindow() const;
     void add(const Note *new_note);
     std::vector<Note> notes();
     ~Bar();
 
     Size distributeAllNotes(const float *MAX_SIZE);
+
+
+    void resize(std::pair<float, float> newSize);
 };
 
 
