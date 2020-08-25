@@ -31,7 +31,8 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                 break;
             case EnterNotify:
                 std::cout << "Entered window boundaries" << std::endl;
-                this->barMap["bottom"]->resize({500,50});
+                // FIXME ----------------------------------------------------------------------------
+                this->barMap.find("right")->second.resize({500,500});
                 this->draw();
                 break;
             default:
@@ -62,7 +63,7 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
   }
   Bar newBar = Bar(barPosition, size, this->display);
   this->bars.emplace_back(newBar);
-  this->barMap.emplace(barPosition,&newBar);
+  this->barMap.emplace(barPosition,newBar);
   // Update bar map
   this->draw();
   return true;
@@ -75,7 +76,7 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("bottom", {500,50});
+    this->addBar("right", {1000,70});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 
@@ -90,8 +91,8 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
     Display * displayPtr = this->display;
-    auto place = [&](std::pair<std::string, Bar*> map){
-        XMapWindow(displayPtr, map.second->getAssociatedWindow());
+    auto place = [&](std::pair<std::string, Bar> map){
+        XMapWindow(displayPtr, map.second.getAssociatedWindow());
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }

@@ -18,7 +18,7 @@ public:
     void distributeBars(const std::vector<Bar*> *processCurrentBars);
     void draw();
     static void receiveXNotification(const XEvent *event);
-    std::map<std::string, Bar*> barMap;
+    std::map<std::string, Bar> barMap;
 
     [[noreturn]] void run();
 

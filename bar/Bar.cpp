@@ -50,7 +50,6 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     XEvent event;
     int screen = XDefaultScreen(display);
     Window root = XRootWindow(display, screen);
-    barWindow = *new Window;
     XGetWindowAttributes(display,root, &this->rootWindowAttributes);
     XSetWindowAttributes swa;
     std::pair<float,float> pos;
@@ -74,19 +73,19 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
 
     // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
     // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
-    barWindow = XCreateWindow( display,root,pos.first,pos.second,
+    std::cout << "BarWindow initially is: " << this->barWindow << std::endl;
+    this->setAssociatedWindow(XCreateWindow( display,root,pos.first,pos.second,
                                this->relativeSize.first,
                                this->relativeSize.second,
-                               0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
+                               0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa));
     // Move window again to force it to ignore window managers
     XSelectInput(display,barWindow, ExposureMask | KeyPressMask | FocusChangeMask | EnterWindowMask | ButtonPressMask);
+    std::cout << "Created window: " << this->barWindow << std::endl;
     // Change attributes and replace override_redirect so window managers don't modify bar's position
     // swa.override_redirect = True;
     // XChangeWindowAttributes(this->display,barWindow,0,&swa);
     /////////XResizeWindow(display,barWindow,rootWindowAttributes.width,50);
    // Get new bar window attributes
-    XWindowAttributes barWindowAttributes;
-    XGetWindowAttributes(display,barWindow, &barWindowAttributes);
     /////////XMoveWindow(display, barWindow, 0, rootWindowAttributes.height-this->currentPositionMargin.getMarginBottom()-barWindowAttributes.height);
     // XMapWindow(display, barWindow);
 }
@@ -106,11 +105,11 @@ Size Bar::distributeAllNotes(const float *MAX_SIZE) {
 
 }
 
-const std::string &Bar::getPosition() const {
+std::string Bar::getPosition() const {
     return position;
 }
 
-Window Bar::getAssociatedWindow() const {
+Window Bar::getAssociatedWindow() {
 
     return this->barWindow;
 }
@@ -123,9 +122,15 @@ void Bar::setSize(const std::pair<float, float> &size) {
     Bar::size = size;
 }
 
-void Bar::resize(std::pair<float, float> newSize) {
+void Bar::resize(std::pair<int, int> newSize) {
+    std::cout << "Resizing window: " << this->barWindow << std::endl;
+    XUnmapWindow(this->display, this->getAssociatedWindow());
     std::pair<int,int> pos = this->calculateProperties(newSize);
     XResizeWindow(this->display,this->getAssociatedWindow(), pos.first,pos.second);
+}
+
+void Bar::setAssociatedWindow(Window win) {
+    this->barWindow = win;
 }
 
 

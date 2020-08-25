@@ -26,6 +26,7 @@ private:
     the y index should be multiplied by -1 (because the relative position would be rootWindowAttributes.height), otherwise most windows would be off-screen after mirroring them to the other side
      */
 public:
+    void setAssociatedWindow(Window win);
     std::pair<int,int> calculateProperties(std::pair<float,float> size);
     const std::pair<float, float> &getSize() const;
     std::pair<float,float> relativeSize;
@@ -33,8 +34,8 @@ public:
     void setSize(const std::pair<float, float> &size);
     Bar(const std::string &newPosition, std::pair<float, float> size, Display *display);
 
-    const std::string &getPosition() const;
-    Window getAssociatedWindow() const;
+    std::string getPosition() const;
+    Window getAssociatedWindow();
     void add(const Note *new_note);
     std::vector<Note> notes();
     ~Bar();
@@ -42,7 +43,7 @@ public:
     Size distributeAllNotes(const float *MAX_SIZE);
 
 
-    void resize(std::pair<float, float> newSize);
+    void resize(std::pair<int, int> newSize);
 };
 
 
