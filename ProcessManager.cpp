@@ -60,7 +60,7 @@ void ProcessManager::receiveXNotification(const XEvent *event) {
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("bottom", {1000,20});
+    this->addBar("bottom", {1000,50});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 

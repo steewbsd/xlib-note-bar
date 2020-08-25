@@ -15,6 +15,10 @@ std::vector<Note> Bar::notes() {
     return this->noteCollection;
 }
 
+void Bar::calculateProperties(const std::string& position, const std::pair<float, float> &relativeSize, std::pair<float, float> *size) {
+
+}
+
 Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
 
     XEvent event;
@@ -24,22 +28,40 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     barWindow = *new Window;
     XGetWindowAttributes(display,root, &rootWindowAttributes);
     XSetWindowAttributes swa;
+    std::pair<float,float> pos;
+    float margin;
     Visual visual = *DefaultVisual(display, screen);
     swa.override_redirect = True;
     swa.background_pixel = 0x00796b;
 
+    // TODO I should make it so the start of the X root coordinates corresponds to usual coords (bottom left)
+    // TODO Using top left is a bit confusing.
+
+    // Locate the bar in the center of its respective position. All the examples are considering bar's default position
+    // on top.
+    // 1.   Substract the total size of the position from the bar size. space = rootWindowAttributes.width - barWindowAttributes.width
+    // 2.   Margin from the border to the bar should be exactly half of that remaining space. margin = space / 2
+    // 3.   Place the bar exactly ${margin} pixels from the border.
+    // 4.   In the case of this example bar, it should be: y= 0 (top left pixel) x=margin
+
     this->position = newPosition;
-    if (this->position == "top" || this->position == "left") {
-        // Position relative to top should be x: 0 and y: 0 (axis starts top left)
-        this->respectivePosition = {0,0};
-        this->directionMultiplier = {1,1};
+    if (this->position == "top") {
+        // Calculate margin (see above)
+        this->relativeSize = size;
+        margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
+        pos = {margin,0};
     } else if (this->position == "bottom") {
-        // Position relative to bottom should start at x: 0 and y: root.heigth
-        this->respectivePosition = {0, rootWindowAttributes.height};
-        this->directionMultiplier = {1,-1};
+        this->relativeSize = size;
+        margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
+        pos = {margin, rootWindowAttributes.height-this->relativeSize.second};
     } else if (this->position == "right") {
-        this->respectivePosition = {rootWindowAttributes.width, 0};
-        this->directionMultiplier = {-1,1};
+        this->relativeSize = {size.second, size.first};
+        margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
+        pos = {rootWindowAttributes.width-this->relativeSize.first,margin};
+    } else if (this->position == "left"){
+        this->relativeSize = {size.second, size.first};
+        margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
+        pos = {0,margin};
     } else {
         return;
     }
@@ -47,9 +69,9 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
 
     // barWindow = XCreateSimpleWindow(this->display,root,100,100,500,300,1,1,WhitePixel(this->display, screen)),WhitePixel(this->display,screen);
     // XCreateWindow(display, parent, x, y, width, height, border_width, depth, class, visual, valuemask, attributes)
-    barWindow = XCreateWindow( display,root,0,0,
-                               this->respectivePosition.first + (this->directionMultiplier.first * size.first),
-                               this->respectivePosition.second + (this->directionMultiplier.second*size.second),
+    barWindow = XCreateWindow( display,root,pos.first,pos.second,
+                               this->relativeSize.first,
+                               this->relativeSize.second,
                                0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa);
     // Move window again to force it to ignore window managers
     XSelectInput(display,barWindow, ExposureMask | KeyPressMask);

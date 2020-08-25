@@ -23,10 +23,10 @@ private:
     /* This pair will be multiplied to the size pair to obtain whether the coordinates should be subtracted from the relative position (this->respectivePosition), for example, if a bar is moved from top to bottom,
     the y index should be multiplied by -1 (because the relative position would be rootWindowAttributes.height), otherwise most windows would be off-screen after mirroring them to the other side
      */
-    std::pair<float,float> directionMultiplier;
 public:
+    void calculateProperties(const std::string& position,const std::pair<float,float>& relativeSize, std::pair<float,float>* size);
     const std::pair<float, float> &getSize() const;
-    std::pair<float,float> respectivePosition;
+    std::pair<float,float> relativeSize;
 
     void setSize(const std::pair<float, float> &size);
     Bar(const std::string &newPosition, std::pair<float, float> size, Display *display);
