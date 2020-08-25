@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <vector>
+#include <mutex>
 #include "Bar.h"
 #include "Size.h"
 #include "Note.h"
