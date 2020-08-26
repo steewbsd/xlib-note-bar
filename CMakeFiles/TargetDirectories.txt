@@ -1,0 +1,3 @@
+/home/kn1ght/CLionProjects/notebar/CMakeFiles/rebuild_cache.dir
+/home/kn1ght/CLionProjects/notebar/CMakeFiles/edit_cache.dir
+/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir

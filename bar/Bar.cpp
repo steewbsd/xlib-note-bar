@@ -46,7 +46,7 @@ std::pair<int,int> Bar::calculateProperties(std::pair<float, float> size) {
 }
 
 Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
-
+    this->state_hidden = false;
     this->display = display;
     XEvent event;
     int screen = XDefaultScreen(display);

@@ -7,9 +7,8 @@
 #include <X11/Xlib.h>
 #include <algorithm>
 #include <iostream>
-#include <pthread.h>
 
-typedef void *(*THREADFUNCPTR)(void *);
+// typedef void *(*THREADFUNCPTR)(void *);
 ProcessManager::~ProcessManager() = default;
 
 ProcessManager::ProcessManager(Display *display) {
@@ -17,7 +16,9 @@ ProcessManager::ProcessManager(Display *display) {
 }
 
 void ProcessManager::listenToXEvents(XEvent *event) {
-    // ProcessManager::receiveXNotification(event);
+    // Create a new any variable which holds the interface XAnyEvent. This contains info about the processed event,
+    // most important one for this case scenario is to know which window received the event.
+    XAnyEvent any = event->xany;
     std::cout << "Received XEvent " << event << std::endl;
         switch (event->type) {
             case KeyPress:
@@ -30,10 +31,10 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                 std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
                 break;
             case EnterNotify:
-                std::cout << "Entered window boundaries" << std::endl;
+                std::cout << "Entered window boundaries in window: " << any.window << std::endl;
                 // FIXME ----------------------------------------------------------------------------
-                this->barMap.find("right")->second.resize({500,500});
-                this->draw();
+                // this->barMap.find("right")->second.resize({500,500});
+                // this->draw();
                 break;
             default:
                 return;
@@ -69,14 +70,11 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
   return true;
 }
 
-void ProcessManager::receiveXNotification(const XEvent *event) {
-  printf("%d", event->xkey.keycode);
-}
-
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("right", {1000,70});
+    this->addBar("bottom", {1000,70});
+    this->addBar("top", {700,20});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 
@@ -96,3 +94,6 @@ void ProcessManager::draw() {
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }
+
+
+

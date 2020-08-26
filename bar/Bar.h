@@ -12,8 +12,7 @@
 
 class Bar {
 private:
-
-
+    bool state_hidden;
     std::vector<Note>noteCollection;
     Window barWindow;
     Display* display;
