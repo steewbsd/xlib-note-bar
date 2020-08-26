@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kn1ght/CLionProjects/notebar/bar/Bar.cpp
+iostream
+-
+vector
+-
+mutex
+-
+Bar.h
+/home/kn1ght/CLionProjects/notebar/bar/Bar.h
+Size.h
+/home/kn1ght/CLionProjects/notebar/bar/Size.h
+Note.h
+/home/kn1ght/CLionProjects/notebar/bar/Note.h
+
+/home/kn1ght/CLionProjects/notebar/bar/Bar.h
+Note.h
+/home/kn1ght/CLionProjects/notebar/bar/Note.h
+X11/Xlib.h
+-
+Size.h
+/home/kn1ght/CLionProjects/notebar/bar/Size.h
+map
+-
+vector
+-
+
+/home/kn1ght/CLionProjects/notebar/bar/Note.h
+iostream
+-
+
+/home/kn1ght/CLionProjects/notebar/bar/Size.h
+

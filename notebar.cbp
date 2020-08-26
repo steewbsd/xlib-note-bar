@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="notebar"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/kn1ght/CLionProjects/notebar"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/kn1ght/CLionProjects/notebar"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/kn1ght/CLionProjects/notebar"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="notebar">
+				<Option output="/home/kn1ght/CLionProjects/notebar/notebar" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/kn1ght/CLionProjects/notebar"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 notebar"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="notebar/fast">
+				<Option output="/home/kn1ght/CLionProjects/notebar/notebar" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/kn1ght/CLionProjects/notebar"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 notebar/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/kn1ght/CLionProjects/notebar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/ProcessManager.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/ProcessManager.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Bar.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Bar.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Note.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Note.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Size.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Size.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/config.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/config.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/interfaces/IState.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/interfaces/IState.h">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/main.cpp">
+			<Option target="notebar"/>
+		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
