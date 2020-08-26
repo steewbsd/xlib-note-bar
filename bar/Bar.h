@@ -45,6 +45,7 @@ public:
 
 
     void resize(std::pair<int, int> newSize);
+    void moveTo(std::string nPos);
 };
 
 

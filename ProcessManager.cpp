@@ -28,8 +28,10 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                 }
                break;
             case ButtonPress:
+                // TODO separate keycodes
                 std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
-                this->barMap.find("bottom")->second.toggleHidden();
+                //this->barMap.find("bottom")->second.toggleHidden();
+                this->barMap.find("bottom")->second.moveTo("top");
                 this->draw();
                 break;
             case EnterNotify:

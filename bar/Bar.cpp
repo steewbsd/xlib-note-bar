@@ -147,6 +147,13 @@ void Bar::toggleHidden() {
     }
 }
 
+void Bar::moveTo(std::string nPos) {
+    // FIXME Temporary test, bar just moves counterclockwise
+    this->position = nPos;
+    std::pair<int,int> pos = this->calculateProperties(this->size);
+    XMoveWindow(this->display,this->getAssociatedWindow(),pos.first,pos.second);
+}
+
 
 Bar::~Bar() = default;
 
