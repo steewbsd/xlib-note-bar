@@ -93,12 +93,12 @@ clean: CMakeFiles/notebar.dir/clean
 CMakeFiles/notebar.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kn1ght/CLionProjects/notebar/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target notebar"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kn1ght/CLionProjects/notebar/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target notebar"
 .PHONY : CMakeFiles/notebar.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/notebar.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kn1ght/CLionProjects/notebar/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kn1ght/CLionProjects/notebar/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/notebar.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/kn1ght/CLionProjects/notebar/CMakeFiles 0
 .PHONY : CMakeFiles/notebar.dir/rule

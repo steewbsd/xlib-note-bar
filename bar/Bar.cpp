@@ -47,6 +47,7 @@ std::pair<int,int> Bar::calculateProperties(std::pair<float, float> size) {
 
 Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
     this->state_hidden = false;
+    this->size = size;
     this->display = display;
     XEvent event;
     int screen = XDefaultScreen(display);
@@ -59,8 +60,6 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     swa.override_redirect = True;
     swa.background_pixel = 0x00796b;
 
-    // TODO I should make it so the start of the X root coordinates corresponds to usual coords (bottom left)
-    // TODO Using top left is a bit confusing.
 
     // Locate the bar in the center of its respective position. All the examples are considering bar's default position
     // on top.
@@ -124,14 +123,28 @@ void Bar::setSize(const std::pair<float, float> &size) {
 }
 
 void Bar::resize(std::pair<int, int> newSize) {
-    std::cout << "Resizing window: " << this->barWindow << std::endl;
-    XUnmapWindow(this->display, this->getAssociatedWindow());
+    std::cout << "Resizing window: " << this->barWindow << " to: " << newSize.first << "," << newSize.second << std::endl;
+    //XUnmapWindow(this->display, this->getAssociatedWindow());
     std::pair<int,int> pos = this->calculateProperties(newSize);
-    XResizeWindow(this->display,this->getAssociatedWindow(), pos.first,pos.second);
+    XResizeWindow(this->display,this->getAssociatedWindow(), newSize.first,newSize.second);
+    XMoveWindow(this->display,this->getAssociatedWindow(),pos.first,pos.second);
+    XWindowAttributes xwa;
+    XGetWindowAttributes(this->display,this->getAssociatedWindow(), &xwa);
+    std::cout << "Resized window to: " << xwa.width << "," << xwa.height << std::endl;
 }
 
 void Bar::setAssociatedWindow(Window win) {
     this->barWindow = win;
+}
+
+void Bar::toggleHidden() {
+    std::cout << "Toggling hidden state to: " << !this->state_hidden << std::endl;
+    this->state_hidden = !this->state_hidden;
+    if (this->state_hidden) {
+         this->resize({this->size.first,this->size.second/2});
+    } else {
+        this->resize(this->size);
+    }
 }
 
 

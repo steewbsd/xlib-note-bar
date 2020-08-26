@@ -89,7 +89,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -277,6 +277,33 @@ config.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/config.cpp.s
 .PHONY : config.cpp.s
 
+interfaces/IState.o: interfaces/IState.cpp.o
+
+.PHONY : interfaces/IState.o
+
+# target to build an object file
+interfaces/IState.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/interfaces/IState.cpp.o
+.PHONY : interfaces/IState.cpp.o
+
+interfaces/IState.i: interfaces/IState.cpp.i
+
+.PHONY : interfaces/IState.i
+
+# target to preprocess a source file
+interfaces/IState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/interfaces/IState.cpp.i
+.PHONY : interfaces/IState.cpp.i
+
+interfaces/IState.s: interfaces/IState.cpp.s
+
+.PHONY : interfaces/IState.s
+
+# target to generate assembly for a file
+interfaces/IState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/notebar.dir/build.make CMakeFiles/notebar.dir/interfaces/IState.cpp.s
+.PHONY : interfaces/IState.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -328,6 +355,9 @@ help:
 	@echo "... config.o"
 	@echo "... config.i"
 	@echo "... config.s"
+	@echo "... interfaces/IState.o"
+	@echo "... interfaces/IState.i"
+	@echo "... interfaces/IState.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/notebar.dir/bar/Note.cpp.o"
   "CMakeFiles/notebar.dir/bar/Size.cpp.o"
   "CMakeFiles/notebar.dir/config.cpp.o"
+  "CMakeFiles/notebar.dir/interfaces/IState.cpp.o"
   "CMakeFiles/notebar.dir/main.cpp.o"
   "notebar"
   "notebar.pdb"

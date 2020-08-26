@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/kn1ght/CLionProjects/notebar/bar/Note.cpp" "/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir/bar/Note.cpp.o"
   "/home/kn1ght/CLionProjects/notebar/bar/Size.cpp" "/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir/bar/Size.cpp.o"
   "/home/kn1ght/CLionProjects/notebar/config.cpp" "/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir/config.cpp.o"
+  "/home/kn1ght/CLionProjects/notebar/interfaces/IState.cpp" "/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir/interfaces/IState.cpp.o"
   "/home/kn1ght/CLionProjects/notebar/main.cpp" "/home/kn1ght/CLionProjects/notebar/CMakeFiles/notebar.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

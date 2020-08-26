@@ -29,12 +29,12 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                break;
             case ButtonPress:
                 std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
+                this->barMap.find("bottom")->second.toggleHidden();
+                this->draw();
                 break;
             case EnterNotify:
                 std::cout << "Entered window boundaries in window: " << any.window << std::endl;
                 // FIXME ----------------------------------------------------------------------------
-                // this->barMap.find("right")->second.resize({500,500});
-                // this->draw();
                 break;
             default:
                 return;
@@ -74,7 +74,6 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
     this->addBar("bottom", {1000,70});
-    this->addBar("top", {700,20});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 

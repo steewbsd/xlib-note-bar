@@ -5,6 +5,7 @@
 #include "Note.h"
 #include <X11/Xlib.h>
 #include "Size.h"
+#include <map>
 #include <vector>
 
 #ifndef NOTEBAR_BAR_H
@@ -29,6 +30,7 @@ public:
     std::pair<int,int> calculateProperties(std::pair<float,float> size);
     const std::pair<float, float> &getSize() const;
     std::pair<float,float> relativeSize;
+    void toggleHidden();
 
     void setSize(const std::pair<float, float> &size);
     Bar(const std::string &newPosition, std::pair<float, float> size, Display *display);
