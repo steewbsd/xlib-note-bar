@@ -1,4 +1,3 @@
-//
 // Created by kn1ght on 8/8/20.
 //
 #include <iostream>
@@ -16,29 +15,30 @@ std::vector<Note> Bar::notes() {
     return this->noteCollection;
 }
 
-std::pair<int,int> Bar::calculateProperties(std::pair<float, float> size) {
+std::pair<int,int> Bar::calculateProperties(std::pair<float, float> psize) {
     float margin;
     std::pair<int,int> pos;
+    std::cout << "Calculating position for bar in: " << this->position << std::endl;
     if (this->position == "top") {
         // Calculate margin (see above)
-        this->relativeSize = size;
+        this->relativeSize = psize;
         margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
         pos = {margin,0};
     } else if (this->position == "bottom") {
-        this->relativeSize = size;
+        this->relativeSize = psize;
         margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
         pos = {margin, rootWindowAttributes.height-this->relativeSize.second};
     } else if (this->position == "right") {
-        this->relativeSize = {size.second, size.first};
+        this->relativeSize = {psize.second, psize.first};
         margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
         pos = {rootWindowAttributes.width-this->relativeSize.first,margin};
     } else if (this->position == "left"){
-        this->relativeSize = {size.second, size.first};
+        this->relativeSize = {psize.second, psize.first};
         margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
         pos = {0,margin};
     } else {
         // IF position is unknown, return dedault bottom bar
-        this->relativeSize = size;
+        this->relativeSize = psize;
         margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
         pos = {margin, rootWindowAttributes.height-this->relativeSize.second};
     }
@@ -152,8 +152,7 @@ void Bar::moveTo(std::string nPos) {
     std::cout << "Changed position from: " << this->position;
     this->position = nPos;
     std::cout << " to: " << this->position << std::endl;
-    std::pair<int,int> pos = this->calculateProperties(this->size);
-    XMoveWindow(this->display,this->getAssociatedWindow(),pos.first,pos.second);
+    this->resize(this->size);
 }
 
 
