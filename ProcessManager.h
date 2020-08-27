@@ -17,7 +17,7 @@ public:
     ~ProcessManager();
     void distributeBars(const std::vector<Bar*> *processCurrentBars);
     void draw();
-    std::map<std::string, Bar> barMap;
+    std::map<Window, Bar> barMap;
 
     [[noreturn]] void run();
 

@@ -6,27 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/kn1ght/CLionProjects/notebar/ProcessManager.cpp
-ProcessManager.h
-/home/kn1ght/CLionProjects/notebar/ProcessManager.h
-bar/Bar.h
-/home/kn1ght/CLionProjects/notebar/bar/Bar.h
-X11/Xlib.h
--
-algorithm
--
+/home/kn1ght/CLionProjects/notebar/bar/Bar.cpp
 iostream
--
-
-/home/kn1ght/CLionProjects/notebar/ProcessManager.h
-bar/Bar.h
-/home/kn1ght/CLionProjects/notebar/bar/Bar.h
-X11/Xlib.h
 -
 vector
 -
-map
+mutex
 -
+Bar.h
+/home/kn1ght/CLionProjects/notebar/bar/Bar.h
+Size.h
+/home/kn1ght/CLionProjects/notebar/bar/Size.h
+Note.h
+/home/kn1ght/CLionProjects/notebar/bar/Note.h
 
 /home/kn1ght/CLionProjects/notebar/bar/Bar.h
 Note.h

@@ -126,7 +126,7 @@ void Bar::resize(std::pair<int, int> newSize) {
     std::cout << "Resizing window: " << this->barWindow << " to: " << newSize.first << "," << newSize.second << std::endl;
     //XUnmapWindow(this->display, this->getAssociatedWindow());
     std::pair<int,int> pos = this->calculateProperties(newSize);
-    XResizeWindow(this->display,this->getAssociatedWindow(), newSize.first,newSize.second);
+    XResizeWindow(this->display,this->getAssociatedWindow(), this->relativeSize.first,this->relativeSize.second);
     XMoveWindow(this->display,this->getAssociatedWindow(),pos.first,pos.second);
     XWindowAttributes xwa;
     XGetWindowAttributes(this->display,this->getAssociatedWindow(), &xwa);
@@ -149,7 +149,9 @@ void Bar::toggleHidden() {
 
 void Bar::moveTo(std::string nPos) {
     // FIXME Temporary test, bar just moves counterclockwise
+    std::cout << "Changed position from: " << this->position;
     this->position = nPos;
+    std::cout << " to: " << this->position << std::endl;
     std::pair<int,int> pos = this->calculateProperties(this->size);
     XMoveWindow(this->display,this->getAssociatedWindow(),pos.first,pos.second);
 }

@@ -30,8 +30,11 @@ void ProcessManager::listenToXEvents(XEvent *event) {
             case ButtonPress:
                 // TODO separate keycodes
                 std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
-                //this->barMap.find("bottom")->second.toggleHidden();
-                this->barMap.find("bottom")->second.moveTo("top");
+                if (event->xkey.keycode == 1) {
+                    this->barMap.find(any.window)->second.toggleHidden();
+                } else if (event->xkey.keycode == 3) {
+                    this->barMap.find(any.window)->second.moveTo("top");
+                }
                 this->draw();
                 break;
             case EnterNotify:
@@ -66,7 +69,7 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
   }
   Bar newBar = Bar(barPosition, size, this->display);
   this->bars.emplace_back(newBar);
-  this->barMap.emplace(barPosition,newBar);
+  this->barMap.emplace(newBar.getAssociatedWindow(),newBar);
   // Update bar map
   this->draw();
   return true;
@@ -76,6 +79,8 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
     this->addBar("bottom", {1000,70});
+    this->addBar("right", {1000,70});
+    this->addBar("left", {1000,70});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 
@@ -90,7 +95,7 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
     Display * displayPtr = this->display;
-    auto place = [&](std::pair<std::string, Bar> map){
+    auto place = [&](std::pair<Window, Bar> map){
         XMapWindow(displayPtr, map.second.getAssociatedWindow());
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
