@@ -37,8 +37,8 @@ public:
 
     std::string getPosition() const;
     Window getAssociatedWindow();
+    Note* getNoteByIndex(const int& index);
     void add(const Note *new_note);
-    std::vector<Note> notes();
     ~Bar();
 
     Size distributeAllNotes(const float *MAX_SIZE);

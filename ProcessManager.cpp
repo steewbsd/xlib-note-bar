@@ -33,7 +33,11 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                 if (event->xkey.keycode == 1) {
                     this->barMap.find(any.window)->second.toggleHidden();
                 } else if (event->xkey.keycode == 3) {
-                    this->barMap.find(any.window)->second.moveTo("top");
+                    srand(time(nullptr));
+                    int num = rand() % 10 + 1;
+                    this->barMap.find(any.window)->second.moveTo(num>5?"top":"bottom");
+                } else if (event->xkey.keycode == 2) {
+                    this->barMap.find(any.window)->second.
                 }
                 this->draw();
                 break;
@@ -79,8 +83,6 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
     this->addBar("bottom", {1000,70});
-    this->addBar("right", {1000,70});
-    this->addBar("left", {1000,70});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 

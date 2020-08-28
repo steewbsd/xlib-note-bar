@@ -35,6 +35,8 @@ vector
 /home/kn1ght/CLionProjects/notebar/bar/Note.h
 iostream
 -
+X11/Xlib.h
+-
 
 /home/kn1ght/CLionProjects/notebar/bar/Size.h
 

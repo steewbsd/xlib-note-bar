@@ -11,10 +11,6 @@ void Bar::add(const Note *new_note) {
     this->noteCollection.push_back(*new_note);
 }
 
-std::vector<Note> Bar::notes() {
-    return this->noteCollection;
-}
-
 std::pair<int,int> Bar::calculateProperties(std::pair<float, float> psize) {
     float margin;
     std::pair<int,int> pos;
@@ -88,6 +84,8 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
    // Get new bar window attributes
     /////////XMoveWindow(display, barWindow, 0, rootWindowAttributes.height-this->currentPositionMargin.getMarginBottom()-barWindowAttributes.height);
     // XMapWindow(display, barWindow);
+    // FIXME
+    this->noteCollection.emplace_back(Note(this->display,this->getAssociatedWindow(),{10,10}));
 }
 
 
@@ -96,7 +94,6 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
 Size Bar::distributeAllNotes(const float *MAX_SIZE) {
 
     // Get number of notes
-    int currentNotes = this->notes().size();
 
     Size tmpSize = Size(0,0);
     // Divide max available space with the number of notes to get the size per note (spn) value
@@ -148,11 +145,18 @@ void Bar::toggleHidden() {
 }
 
 void Bar::moveTo(std::string nPos) {
-    // FIXME Temporary test, bar just moves counterclockwise
+    // FIXME
     std::cout << "Changed position from: " << this->position;
     this->position = nPos;
     std::cout << " to: " << this->position << std::endl;
     this->resize(this->size);
+}
+
+Note* Bar::getNoteByIndex(const int &index) {
+    if (index >= this->noteCollection.size() || index < 0) {
+        return nullptr;
+    }
+    return &this->noteCollection[index];
 }
 
 
