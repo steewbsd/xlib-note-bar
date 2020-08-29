@@ -19,6 +19,7 @@ private:
     Display* display;
     std::string position;
     XWindowAttributes rootWindowAttributes;
+    int getNoteWidth();
     // Distance from the bar to the sides of the screen
     // This margin is a copy of this->margin but removing the unneeded margin side
     std::pair<float,float> size;
@@ -26,6 +27,7 @@ private:
     the y index should be multiplied by -1 (because the relative position would be rootWindowAttributes.height), otherwise most windows would be off-screen after mirroring them to the other side
      */
 public:
+    void mapAll();
     void setAssociatedWindow(Window win);
     std::pair<int,int> calculateProperties(std::pair<float,float> size);
     const std::pair<float, float> &getSize() const;
@@ -38,7 +40,7 @@ public:
     std::string getPosition() const;
     Window getAssociatedWindow();
     Note* getNoteByIndex(const int& index);
-    void add(const Note *new_note);
+    void add(const Note &new_note);
     ~Bar();
 
     Size distributeAllNotes(const float *MAX_SIZE);

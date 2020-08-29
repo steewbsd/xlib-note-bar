@@ -30,6 +30,7 @@ void ProcessManager::listenToXEvents(XEvent *event) {
             case ButtonPress:
                 // TODO separate keycodes
                 std::cout << "Received ButtonPress event with keycode:" << event->xkey.keycode << std::endl;
+                // HERE ONLY GENERAL BAR EVENTS WILL BE HANDLED, FOR SPECIFIC NOTE EVENTS GO BELOW
                 if (event->xkey.keycode == 1) {
                     this->barMap.find(any.window)->second.toggleHidden();
                 } else if (event->xkey.keycode == 3) {
@@ -37,7 +38,7 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                     int num = rand() % 10 + 1;
                     this->barMap.find(any.window)->second.moveTo(num>5?"top":"bottom");
                 } else if (event->xkey.keycode == 2) {
-                    this->barMap.find(any.window)->second.
+                    //this->barMap.find(any.window)->second.
                 }
                 this->draw();
                 break;
@@ -96,9 +97,8 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 
 void ProcessManager::draw() {
     std::cout << "Drawing window" << std::endl;
-    Display * displayPtr = this->display;
     auto place = [&](std::pair<Window, Bar> map){
-        XMapWindow(displayPtr, map.second.getAssociatedWindow());
+        map.second.mapAll();
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }

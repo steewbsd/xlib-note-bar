@@ -15,12 +15,14 @@ private:
     Window noteWindow;
     // Constructor and destructor
 public:
+    std::string toString();
     Window getNoteWindow() const;
     void setNoteWindow(Window newWindow);
     std::string Content;
     ~Note();
+    void resizeAndMove(int x, int y, int width, int height);
 
-    Note(Display *dis, Window pWindow, std::pair<int, int> noteSize);
+    Note(Display *dis, Window pWindow);
 };
 
 #endif //NOTEBAR_NOTE_H
