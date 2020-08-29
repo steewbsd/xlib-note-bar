@@ -56,8 +56,9 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     swa.override_redirect = True;
     swa.background_pixel = 0x00796b;
 
-
-
+   // FIXME TEST
+   int depth = DefaultDepth(this->display,screen);
+    std::cout << "DEPTH: " << depth << std::endl;
 
     // Locate the bar in the center of its respective position. All the examples are considering bar's default position
     // on top.
@@ -75,7 +76,7 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     this->setAssociatedWindow(XCreateWindow( display,root,pos.first,pos.second,
                                this->relativeSize.first,
                                this->relativeSize.second,
-                               0, DefaultDepth(display,screen), InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa));
+                               0, depth, InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa));
     // Move window again to force it to ignore window managers
     XSelectInput(display,barWindow, ExposureMask | KeyPressMask | FocusChangeMask | EnterWindowMask | ButtonPressMask);
     std::cout << "Created window: " << this->barWindow << std::endl;
@@ -175,9 +176,11 @@ void Bar::mapAll() {
     int startingX = xwa.x;
     for (int i = 0; i < this->noteCollection.size(); i++) {
         // Place note in the middle for now
-        this->getNoteByIndex(i)->resizeAndMove(0, 0,width,xwa.height);
+        std::cout << "Mapping note with index " << i << std::endl;
+        this->getNoteByIndex(i)->resizeAndMove(width*i, 0,width,xwa.height);
         XMapWindow(this->display, this->getNoteByIndex(i)->getNoteWindow());
     }
+
 }
 
 int Bar::getNoteWidth() {
