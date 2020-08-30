@@ -98,14 +98,12 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
 // This will return the main size of every note (if position requires notes to be vertically aligned the size will
 // represent the height of the notes, in case of horizontal it will represent the width).
 Size Bar::distributeAllNotes(const float *MAX_SIZE) {
-
     // Get number of notes
 
     Size tmpSize = Size(0,0);
     // Divide max available space with the number of notes to get the size per note (spn) value
     // float spnX = (*MAX_SIZE-this->margin->getMarginLeft()-this->margin->getMarginRight()) /
     return Size(0,0);
-
 }
 
 std::string Bar::getPosition() const {
@@ -113,7 +111,6 @@ std::string Bar::getPosition() const {
 }
 
 Window Bar::getAssociatedWindow() {
-
     return this->barWindow;
 }
 
