@@ -58,7 +58,7 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
 
    // FIXME TEST
    int depth = DefaultDepth(this->display,screen);
-    std::cout << "DEPTH: " << depth << std::endl;
+    std::cout << "DEPTH OF PARENT WINDOW: " << depth << std::endl;
 
     // Locate the bar in the center of its respective position. All the examples are considering bar's default position
     // on top.
@@ -76,7 +76,7 @@ Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* d
     this->setAssociatedWindow(XCreateWindow( display,root,pos.first,pos.second,
                                this->relativeSize.first,
                                this->relativeSize.second,
-                               0, depth, InputOutput, &visual, CWBackPixel|CWOverrideRedirect, &swa));
+                               0, depth, InputOutput, &visual, CWOverrideRedirect, &swa));
     // Move window again to force it to ignore window managers
     XSelectInput(display,barWindow, ExposureMask | KeyPressMask | FocusChangeMask | EnterWindowMask | ButtonPressMask);
     std::cout << "Created window: " << this->barWindow << std::endl;
@@ -170,24 +170,27 @@ void Bar::mapAll() {
     // Draw notes after the bar itself
     // Get the reference x position (for bottom bar)
     XWindowAttributes xwa;
+    XWindowAttributes noteAttr;
     XGetWindowAttributes(this->display,this->getAssociatedWindow(),&xwa);
     std::cout << "Mapping all notes" << std::endl;
-    int width = this->getNoteWidth();
     int startingX = xwa.x;
     for (int i = 0; i < this->noteCollection.size(); i++) {
         // Place note in the middle for now
         std::cout << "Mapping note with index " << i << std::endl;
+        XGetWindowAttributes(this->display,this->getNoteByIndex(i)->getNoteWindow(), &noteAttr);
+        int width = this->getNoteWidth(noteAttr.border_width);
         this->getNoteByIndex(i)->resizeAndMove(width*i, 0,width,xwa.height);
         XMapWindow(this->display, this->getNoteByIndex(i)->getNoteWindow());
+        XCirculateSubwindowsUp(this->display,this->getNoteByIndex(i)->getNoteWindow());
     }
-
 }
 
-int Bar::getNoteWidth() {
+int Bar::getNoteWidth(const int &border_width) {
+    // NUmber of borders is equal to number of notes + 1
     XWindowAttributes xwa;
     XGetWindowAttributes(this->display,this->getAssociatedWindow(),&xwa);
-    return int(
-            xwa.width / this->noteCollection.size()
+    return int((xwa.width-((this->noteCollection.size()+1)*border_width))
+                    / this->noteCollection.size()
             );
 }
 

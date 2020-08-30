@@ -20,7 +20,6 @@ Note::Note(Display* dis, Window pWindow) {
     XSetWindowAttributes swa;
     swa.override_redirect = True;
     //swa.background_pixel = 0x;
-
     this->setNoteWindow(
         XCreateWindow(this->display, this->parentWindow,0,0,100,100,10, CopyFromParent,InputOutput,visual,CWBackPixel|CWOverrideRedirect,&swa)
             );

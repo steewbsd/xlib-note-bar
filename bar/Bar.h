@@ -19,7 +19,7 @@ private:
     Display* display;
     std::string position;
     XWindowAttributes rootWindowAttributes;
-    int getNoteWidth();
+    int getNoteWidth(const int& border_width);
     // Distance from the bar to the sides of the screen
     // This margin is a copy of this->margin but removing the unneeded margin side
     std::pair<float,float> size;
