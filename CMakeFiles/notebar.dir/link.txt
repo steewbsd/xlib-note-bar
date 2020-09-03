@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/notebar.dir/main.cpp.o CMakeFiles/notebar.dir/bar/Bar.cpp.o CMakeFiles/notebar.dir/bar/Note.cpp.o CMakeFiles/notebar.dir/ProcessManager.cpp.o CMakeFiles/notebar.dir/config.cpp.o CMakeFiles/notebar.dir/bar/Size.cpp.o CMakeFiles/notebar.dir/interfaces/IState.cpp.o -o notebar  -lX11 -pthread 

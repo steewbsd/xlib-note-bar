@@ -169,7 +169,6 @@ void Bar::mapAll() {
     XWindowAttributes noteAttr;
     XGetWindowAttributes(this->display,this->getAssociatedWindow(),&xwa);
     std::cout << "Mapping all notes" << std::endl;
-    int startingX = xwa.x;
     for (int i = 0; i < this->noteCollection.size(); i++) {
         // Place note in the middle for now
         std::cout << "Mapping note with index " << i << std::endl;
