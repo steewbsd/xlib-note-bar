@@ -7,6 +7,7 @@
 #include "Size.h"
 #include <map>
 #include <vector>
+#include "constants/constants.h"
 
 #ifndef NOTEBAR_BAR_H
 #define NOTEBAR_BAR_H
@@ -17,7 +18,7 @@ private:
     std::vector<Note>noteCollection;
     Window barWindow;
     Display* display;
-    std::string position;
+    Position position;
     XWindowAttributes rootWindowAttributes;
     int getNoteWidth(const int& border_width);
     // Distance from the bar to the sides of the screen
@@ -35,9 +36,9 @@ public:
     void toggleHidden();
 
     void setSize(const std::pair<float, float> &size);
-    Bar(const std::string &newPosition, std::pair<float, float> size, Display *display);
+    Bar(Position newPosition, std::pair<float, float> size, Display *display);
 
-    std::string getPosition() const;
+    Position getPosition() const;
     Window getAssociatedWindow();
     Note* getNoteByIndex(const int& index);
     void add(const Note &new_note);
@@ -47,7 +48,7 @@ public:
 
 
     void resize(std::pair<int, int> newSize);
-    void moveTo(std::string nPos);
+    void moveTo(Position nPos);
 };
 
 

@@ -6,11 +6,13 @@ CMakeFiles/notebar.dir/ProcessManager.cpp.o: ProcessManager.h
 CMakeFiles/notebar.dir/ProcessManager.cpp.o: bar/Bar.h
 CMakeFiles/notebar.dir/ProcessManager.cpp.o: bar/Note.h
 CMakeFiles/notebar.dir/ProcessManager.cpp.o: bar/Size.h
+CMakeFiles/notebar.dir/ProcessManager.cpp.o: bar/constants/constants.h
 
 CMakeFiles/notebar.dir/bar/Bar.cpp.o: bar/Bar.cpp
 CMakeFiles/notebar.dir/bar/Bar.cpp.o: bar/Bar.h
 CMakeFiles/notebar.dir/bar/Bar.cpp.o: bar/Note.h
 CMakeFiles/notebar.dir/bar/Bar.cpp.o: bar/Size.h
+CMakeFiles/notebar.dir/bar/Bar.cpp.o: bar/constants/constants.h
 
 CMakeFiles/notebar.dir/bar/Note.cpp.o: bar/Note.cpp
 CMakeFiles/notebar.dir/bar/Note.cpp.o: bar/Note.h
@@ -27,5 +29,6 @@ CMakeFiles/notebar.dir/main.cpp.o: ProcessManager.h
 CMakeFiles/notebar.dir/main.cpp.o: bar/Bar.h
 CMakeFiles/notebar.dir/main.cpp.o: bar/Note.h
 CMakeFiles/notebar.dir/main.cpp.o: bar/Size.h
+CMakeFiles/notebar.dir/main.cpp.o: bar/constants/constants.h
 CMakeFiles/notebar.dir/main.cpp.o: main.cpp
 

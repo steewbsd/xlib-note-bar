@@ -11,24 +11,24 @@ void Bar::add(const Note &new_note) {
     this->noteCollection.push_back(new_note);
 }
 
+
 std::pair<int,int> Bar::calculateProperties(std::pair<float, float> psize) {
     float margin;
     std::pair<int,int> pos;
-    std::cout << "Calculating position for bar in: " << this->position << std::endl;
-    if (this->position == "top") {
+    if (this->position == Position::top) {
         // Calculate margin (see above)
         this->relativeSize = psize;
         margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
         pos = {margin,0};
-    } else if (this->position == "bottom") {
+    } else if (this->position == Position::bottom) {
         this->relativeSize = psize;
         margin = (rootWindowAttributes.width - this->relativeSize.first)/2;
         pos = {margin, rootWindowAttributes.height-this->relativeSize.second};
-    } else if (this->position == "right") {
+    } else if (this->position == Position::right) {
         this->relativeSize = {psize.second, psize.first};
         margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
         pos = {rootWindowAttributes.width-this->relativeSize.first,margin};
-    } else if (this->position == "left"){
+    } else if (this->position == Position::left){
         this->relativeSize = {psize.second, psize.first};
         margin = (rootWindowAttributes.height - this->relativeSize.second)/2;
         pos = {0,margin};
@@ -41,7 +41,7 @@ std::pair<int,int> Bar::calculateProperties(std::pair<float, float> psize) {
     return pos;
 }
 
-Bar::Bar(const std::string& newPosition, std::pair<float,float> size, Display* display) {
+Bar::Bar(Position newPosition, std::pair<float,float> size, Display* display) {
     this->state_hidden = false;
     this->size = size;
     this->display = display;
@@ -106,7 +106,7 @@ Size Bar::distributeAllNotes(const float *MAX_SIZE) {
     return Size(0,0);
 }
 
-std::string Bar::getPosition() const {
+Position Bar::getPosition() const {
     return position;
 }
 
@@ -123,6 +123,7 @@ void Bar::setSize(const std::pair<float, float> &size) {
 }
 
 void Bar::resize(std::pair<int, int> newSize) {
+    XUnmapWindow(this->display,this->getAssociatedWindow());
     std::cout << "Resizing window: " << this->barWindow << " to: " << newSize.first << "," << newSize.second << std::endl;
     //XUnmapWindow(this->display, this->getAssociatedWindow());
     std::pair<int,int> pos = this->calculateProperties(newSize);
@@ -147,11 +148,9 @@ void Bar::toggleHidden() {
     }
 }
 
-void Bar::moveTo(std::string nPos) {
+void Bar::moveTo(Position nPos) {
     // FIXME
-    std::cout << "Changed position from: " << this->position;
     this->position = nPos;
-    std::cout << " to: " << this->position << std::endl;
     this->resize(this->size);
 }
 
@@ -178,15 +177,13 @@ void Bar::mapAll() {
         int width = this->getNoteWidth(noteAttr.border_width);
         this->getNoteByIndex(i)->resizeAndMove(width*i, 0,width,xwa.height);
         XMapWindow(this->display, this->getNoteByIndex(i)->getNoteWindow());
-        XCirculateSubwindowsUp(this->display,this->getNoteByIndex(i)->getNoteWindow());
+        //XCirculateSubwindowsUp(this->display,this->getNoteByIndex(i)->getNoteWindow());
     }
 }
 
 int Bar::getNoteWidth(const int &border_width) {
     // NUmber of borders is equal to number of notes + 1
-    XWindowAttributes xwa;
-    XGetWindowAttributes(this->display,this->getAssociatedWindow(),&xwa);
-    return int((xwa.width-((this->noteCollection.size()+1)*border_width))
+    return int((this->relativeSize.first-((this->noteCollection.size()+1)*border_width))
                     / this->noteCollection.size()
             );
 }

@@ -6,6 +6,7 @@
 #include <X11/Xlib.h>
 #include <vector>
 #include <map>
+#include "bar/constants/constants.h"
 
 #ifndef NOTEBAR_PROCESS_MANAGER_H
 #define NOTEBAR_PROCESS_MANAGER_H
@@ -25,11 +26,11 @@ private:
     std::vector<Bar> bars;
     Display *display;
     pthread_t processThreadPool[1]{};
-    bool checkPositionAlreadyExists(const std::string *positionCheck);
+    bool checkPositionAlreadyExists(Position positionCheck);
 
     void listenToXEvents(XEvent *event);
 
-    bool addBar(const std::string &barPosition, std::pair<float, float> size);
+    bool addBar(Position barPosition, std::pair<float, float> size);
 };
 
 #endif //NOTEBAR_PROCESS_MANAGER_H

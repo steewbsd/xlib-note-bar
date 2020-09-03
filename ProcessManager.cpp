@@ -7,6 +7,7 @@
 #include <X11/Xlib.h>
 #include <algorithm>
 #include <iostream>
+#include "bar/constants/constants.h"
 
 // typedef void *(*THREADFUNCPTR)(void *);
 ProcessManager::~ProcessManager() = default;
@@ -36,7 +37,7 @@ void ProcessManager::listenToXEvents(XEvent *event) {
                 } else if (event->xkey.keycode == 3) {
                     srand(time(nullptr));
                     int num = rand() % 10 + 1;
-                    this->barMap.find(any.window)->second.moveTo(num>5?"top":"bottom");
+                    this->barMap.find(any.window)->second.moveTo(num>5?Position::top:Position::bottom);
                 } else if (event->xkey.keycode == 2) {
                     //this->barMap.find(any.window)->second.
                 }
@@ -60,16 +61,16 @@ void ProcessManager::distributeBars(const std::vector<Bar *> *processCurrentBars
     
 }
 
-bool ProcessManager::checkPositionAlreadyExists(
-    const std::string *positionCheck) {
+bool
+ProcessManager::checkPositionAlreadyExists(Position positionCheck) {
   return std::any_of(this->bars.begin(), this->bars.end(),
                      [positionCheck](const Bar &i) {
-                       return i.getPosition() == *positionCheck;
+                       return i.getPosition() == positionCheck;
                      });
 }
 
-bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,float> size) {
-  if (ProcessManager::checkPositionAlreadyExists(&barPosition)) {
+bool ProcessManager::addBar(Position barPosition, std::pair<float,float> size) {
+  if (ProcessManager::checkPositionAlreadyExists(barPosition)) {
     return false;
   }
   Bar newBar = Bar(barPosition, size, this->display);
@@ -83,7 +84,7 @@ bool ProcessManager::addBar(const std::string &barPosition, std::pair<float,floa
 // Run program forever (until stopped by user or signal)
 [[noreturn]] void ProcessManager::run() {
     // Add thread for handling X key presses and key combinations
-    this->addBar("bottom", {1000,70});
+    this->addBar(Position::bottom, {1000,70});
     /* pthread_create(&this->processThreadPool[0], nullptr,
                  (THREADFUNCPTR)listenToXEvents, this); */
 
@@ -102,6 +103,4 @@ void ProcessManager::draw() {
     };
     std::for_each(this->barMap.begin(), this->barMap.end(), place);
 }
-
-
 

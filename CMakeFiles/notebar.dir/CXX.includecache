@@ -6,19 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/kn1ght/CLionProjects/notebar/bar/Bar.cpp
+/home/kn1ght/CLionProjects/notebar/ProcessManager.cpp
+ProcessManager.h
+/home/kn1ght/CLionProjects/notebar/ProcessManager.h
+bar/Bar.h
+/home/kn1ght/CLionProjects/notebar/bar/Bar.h
+X11/Xlib.h
+-
+algorithm
+-
 iostream
+-
+bar/constants/constants.h
+/home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
+
+/home/kn1ght/CLionProjects/notebar/ProcessManager.h
+bar/Bar.h
+/home/kn1ght/CLionProjects/notebar/bar/Bar.h
+X11/Xlib.h
 -
 vector
 -
-mutex
+map
 -
-Bar.h
-/home/kn1ght/CLionProjects/notebar/bar/Bar.h
-Size.h
-/home/kn1ght/CLionProjects/notebar/bar/Size.h
-Note.h
-/home/kn1ght/CLionProjects/notebar/bar/Note.h
+bar/constants/constants.h
+/home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
 
 /home/kn1ght/CLionProjects/notebar/bar/Bar.h
 Note.h
@@ -31,10 +43,8 @@ map
 -
 vector
 -
-
-/home/kn1ght/CLionProjects/notebar/bar/Note.cpp
-Note.h
-/home/kn1ght/CLionProjects/notebar/bar/Note.h
+constants/constants.h
+/home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
 
 /home/kn1ght/CLionProjects/notebar/bar/Note.h
 iostream
@@ -43,4 +53,6 @@ X11/Xlib.h
 -
 
 /home/kn1ght/CLionProjects/notebar/bar/Size.h
+
+/home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
 

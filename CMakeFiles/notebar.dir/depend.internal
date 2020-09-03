@@ -7,11 +7,13 @@ CMakeFiles/notebar.dir/ProcessManager.cpp.o
  /home/kn1ght/CLionProjects/notebar/bar/Bar.h
  /home/kn1ght/CLionProjects/notebar/bar/Note.h
  /home/kn1ght/CLionProjects/notebar/bar/Size.h
+ /home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
 CMakeFiles/notebar.dir/bar/Bar.cpp.o
  /home/kn1ght/CLionProjects/notebar/bar/Bar.cpp
  /home/kn1ght/CLionProjects/notebar/bar/Bar.h
  /home/kn1ght/CLionProjects/notebar/bar/Note.h
  /home/kn1ght/CLionProjects/notebar/bar/Size.h
+ /home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
 CMakeFiles/notebar.dir/bar/Note.cpp.o
  /home/kn1ght/CLionProjects/notebar/bar/Note.cpp
  /home/kn1ght/CLionProjects/notebar/bar/Note.h
@@ -28,4 +30,5 @@ CMakeFiles/notebar.dir/main.cpp.o
  /home/kn1ght/CLionProjects/notebar/bar/Bar.h
  /home/kn1ght/CLionProjects/notebar/bar/Note.h
  /home/kn1ght/CLionProjects/notebar/bar/Size.h
+ /home/kn1ght/CLionProjects/notebar/bar/constants/constants.h
  /home/kn1ght/CLionProjects/notebar/main.cpp

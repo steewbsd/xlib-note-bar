@@ -90,6 +90,9 @@
 		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/Size.h">
 			<Option target="notebar"/>
 		</Unit>
+		<Unit filename="/home/kn1ght/CLionProjects/notebar/bar/constants/constants.h">
+			<Option target="notebar"/>
+		</Unit>
 		<Unit filename="/home/kn1ght/CLionProjects/notebar/config.cpp">
 			<Option target="notebar"/>
 		</Unit>
